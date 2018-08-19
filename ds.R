@@ -65,5 +65,56 @@ median(v1)
 sd(v1)
 variance(v1)
 
-#matrix----
-#array----
+#matrix----can be of 1 datatype-numerical,logical or character
+ (m1= matrix(1:24, nrow=4)) #data is getting filled up column wise
+(m2= matrix(1:24, nrow=4, byrow=T)) #data getting filled up row wise
+#by default its column wise
+
+(m3= matrix(1:24, ncol=4, byrow=T))
+
+x= runif(60,60,100) #60 students and marks btw 60 and 100
+?runif #uniform distributed values
+
+plot(density(x))
+
+#round, trunc, ceiling, floor
+x= trunc(runif(60,60,100))
+plot(density(x))
+
+(m4= matrix(x, ncol=6))
+
+colSums(m4)
+rowSums(m4)
+rowMeans(m4)
+colMeans(m4)
+m4[m4>67]
+m4[m4>67 & m4<86]
+m4[10,]
+m4[8:10,]
+m4[8:10,1:3]
+m4[8:10, c(1,3,5)]#use c when not in sequence otherwise :
+m4[,c(1,5,6)]
+
+rowSums(m4[8:10, c(1,3,5)])
+
+
+
+#array---- one more dimension to matrix
+
+#data.frame
+#rollno, name, gende, course, marks1, marks2
+
+(rollno = 1:60)
+(name= paste('student1', 1:60, sep='-'))
+name[1:10]
+name[15:20]
+name[c(15,20,37)]
+name[-1]
+name[-c(1:10)] #- to remove
+rev(name)
+name[60:1]
+name[-c(1:10, 35:40)]
+(gender=sample(c('Male','Female'),size=60, replace = T, prob=c(.3,.7)))
+
+
+
