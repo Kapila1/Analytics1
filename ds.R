@@ -115,6 +115,96 @@ rev(name)
 name[60:1]
 name[-c(1:10, 35:40)]
 (gender=sample(c('Male','Female'),size=60, replace = T, prob=c(.3,.7)))
+(course= sample(c('BBA','MBA','FPM'), size=60, replace=T, prob=c(.4,.2,.1)))
+(marks1 = ceiling(rnorm(60,mean = 60, sd=11)))
+(marks2 = ceiling(rnorm(60,mean = 65, sd=7)))
+(grades= sample(c('A','B','C'), size=60, replace= T))
+students =data.frame(rollno, name, gender, course, marks1, marks2, grades, stringsAsFactors= F) 
+class(students)
+summary(students)# prints value
+students[,c('name')]
+
+students[students$gender == 'Male', c('rollno','gender','marks1')]
+
+students[students$gender == 'Male' & students$grades == 'C', c('rollno','gender','marks1')]
+
+students[students$marks1 > 55 |students$marks1 < 75, c('rollno','gender','marks1')]
+
+students$gender
+t1 = table(students$course)
+barplot(table(students$course))
+
+barplot(table(students$course), ylim=c(0,50), col=1:3)
+text(1:3, 25, table(students$course)+5, table(students&course)) #table(x axis, y axis, what to print)
 
 
+str(students)  #structure of the data frame or any other value,prints the type of the column
+nrow(students)
+names(students)
+dim(students)#tells the dimension
+head(students) #first few records
+tail(students)#last few records
+head(students, n=7)
+
+?head
+#avg marks scored by each gender in marks1
+
+#gender, marks1
+aggregate(students$marks1, by= list(students$gender), FUN= mean) #groupby=by and FUN=function
+aggregate(students$marks2, by= list(students$course), FUN= max) #max marks scored from each course in subject 2
+aggregate(students$marks2, by= list(students$gender , students$course), FUN= mean) #mean marks scored by each gender in each subject
+
+
+
+#deployer package- dplyr
+library(dplyr) #to load the library
+
+students %>% group_by(gender) %>% summarise(mean(marks1)) #piping it
+
+students %>% group_by(course,gender) %>% summarise(mean(marks1), min(marks2), max(marks2)) 
+
+students %>% group_by(course,gender) %>% summarise(meanmarks1= mean(marks1), min(marks2), max(marks2)) %>% arrange(desc(meanmarks1))
+
+students %>% arrange(marks1)
+
+students %>% arrange(desc(marks1)) %>% filter(gender=='Male') 
+
+students %>% arrange(desc(marks1)) %>% filter(gender=='Male') %>% head(n=5)
+
+
+
+#sample fraction and sample n function
+
+#sample_frac(students, 0.1, replace=FALSE)
+#sample_n(students, 5, replace=FALSE)
+
+students %>% sample_frac(.1)
+students %>% sample_n(2)
+
+students %>% sample_frac(.1) %>% arrange(course)
+
+students %>% sample_frac(.1) %>% arrange(course) %>% select(name, gender)
+
+students %>% arrange(course, grades, marks1) %>% select(course, grades, marks1)
+
+students %>% arrange(desc(course), gender, marks1)
+
+students %>% arrange(course, grades, marks1) %>% select(course, grades, marks1) %>% filter(course=='BBA')
+students %>% select(name, course, grades, marks1) %>% group_by(course) %>% arrange(course, grades, marks1) %>% top_n(5)
+
+#factor
+names(students)
+students$gender= factor(students$gender)
+summary(students$gender)
+summary(students$course)
+students$course = factor(students$course, ordered = T, levels = c('FPM','MBA','BBA'))
+summary(students$course)
+
+students$grades
+#C, A, B
+students$grades = factor(students$grades, ordered= T, levels = c('C','A','B'))
+
+students$grades
+table(students$grades)
+barplot(table(students$grades))
 
