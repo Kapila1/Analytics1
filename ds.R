@@ -208,3 +208,17 @@ students$grades
 table(students$grades)
 barplot(table(students$grades))
 
+
+students
+write.csv(students, './data/iimtrichy.csv') #to save the file in data folder, will make one extra column of serial no(x)
+#FILE IMPORT
+students2 = read.csv('./data/iimtrichy.csv')
+
+head(students2) # default of head=6
+
+students3 = read.csv(file.choose())
+head(students3)
+
+students3 = students3[,-1] #to remove the X column
+head(students3)
+
