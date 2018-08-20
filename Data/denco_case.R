@@ -40,13 +40,12 @@ t1=table(sales$custname)
 head(t1)  #unsorted
 t2= sort(t1,decreasing=T )
 head(t2)
-
 #Method-1b - using dplyr
 library(dplyr)
 sales %>% dplyr::count(custname, sort=TRUE)
 sales %>% dplyr::group_by(custname) %>% dplyr::summarise(n = n()) %>% dplyr::arrange(desc(n))
 
-#Reqmt2- Profitable parts----having a high margin
+#Reqmt2- Profitable parts----
 #which parts are sold more frequently - count 
 sales %>% dplyr::group_by(partnum) %>% dplyr::summarise(n = n()) %>% dplyr::arrange(desc(n))
 
